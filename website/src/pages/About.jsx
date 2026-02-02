@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import { motion } from "framer-motion";
 import { Shield, Award, Target, Users, Globe, Linkedin, Twitter } from "lucide-react";
 import { COLORS, IMAGES, TIMELINE, TEAM_MEMBERS, BRAND } from "../utils/constants";
@@ -76,44 +76,37 @@ export default function AboutPage() {
           </AnimateIn>
 
           <div className="relative">
-            {/* Vertical line */}
-            <div className="absolute hidden md:block" style={{ left: "50%", top: 0, bottom: 0, width: 2, background: `linear-gradient(180deg, ${COLORS.gold}, ${COLORS.gray200})`, transform: "translateX(-50%)" }} />
+            {/* Vertical line — desktop: center, mobile: left */}
+            <div className="absolute top-0 bottom-0 left-5 md:left-1/2 w-0.5 md:-translate-x-1/2" style={{ background: `linear-gradient(180deg, ${COLORS.gold}, ${COLORS.gray200})` }} />
 
-            {TIMELINE.map((item, i) => (
-              <AnimateIn key={i} variant={i % 2 === 0 ? "fadeLeft" : "fadeRight"} delay={i * 0.1}>
-                <div
-                  className="relative mb-12"
-                  style={{
-                    display: "flex",
-                    justifyContent: i % 2 === 0 ? "flex-start" : "flex-end",
-                    paddingLeft: i % 2 === 0 ? 0 : "calc(50% + 40px)",
-                    paddingRight: i % 2 === 0 ? "calc(50% + 40px)" : 0,
-                  }}
-                >
-                  {/* Dot */}
-                  <div className="absolute hidden md:block" style={{
-                    left: "50%", top: 8, transform: "translateX(-50%)", zIndex: 2,
-                    width: 16, height: 16, borderRadius: "50%", background: COLORS.gold,
-                    border: `3px solid ${COLORS.white}`, boxShadow: "0 0 0 4px rgba(245,183,49,0.2)",
-                  }} />
+            {TIMELINE.map((item, i) => {
+              const isLeft = i % 2 === 0;
+              return (
+                <AnimateIn key={i} variant="fadeUp" delay={i * 0.1}>
+                  <div className={`relative mb-12 flex pl-12 pr-0 md:pl-0 md:pr-0 ${isLeft ? "md:justify-start md:pr-[calc(50%+40px)]" : "md:justify-end md:pl-[calc(50%+40px)]"}`}>
+                    {/* Dot — mobile: left-aligned, desktop: center */}
+                    <div
+                      className="absolute left-3 md:left-1/2 top-2 md:-translate-x-1/2 z-10 w-4 h-4 rounded-full"
+                      style={{
+                        background: COLORS.gold,
+                        border: `3px solid ${COLORS.white}`,
+                        boxShadow: "0 0 0 4px rgba(245,183,49,0.2)",
+                      }}
+                    />
 
-                  <div className="w-full bg-white rounded-2xl p-7" style={{ boxShadow: "0 8px 30px rgba(0,0,0,0.05)", border: "1px solid rgba(0,0,0,0.04)", maxWidth: 400 }}>
-                    <div className="font-mono" style={{ fontSize: 13, fontWeight: 700, color: COLORS.gold, letterSpacing: 2 }}>{item.year}</div>
-                    <h4 className="font-display" style={{ fontSize: 20, fontWeight: 700, color: COLORS.navy, marginTop: 8 }}>{item.title}</h4>
-                    <p style={{ fontSize: 14, color: COLORS.gray600, lineHeight: 1.7, marginTop: 8 }}>{item.desc}</p>
+                    <div
+                      className="w-full md:max-w-[400px] bg-white rounded-2xl p-6 md:p-7"
+                      style={{ boxShadow: "0 8px 30px rgba(0,0,0,0.05)", border: "1px solid rgba(0,0,0,0.04)" }}
+                    >
+                      <div className="font-mono" style={{ fontSize: 13, fontWeight: 700, color: COLORS.gold, letterSpacing: 2 }}>{item.year}</div>
+                      <h4 className="font-display" style={{ fontSize: 20, fontWeight: 700, color: COLORS.navy, marginTop: 8 }}>{item.title}</h4>
+                      <p style={{ fontSize: 14, color: COLORS.gray600, lineHeight: 1.7, marginTop: 8 }}>{item.desc}</p>
+                    </div>
                   </div>
-                </div>
-              </AnimateIn>
-            ))}
+                </AnimateIn>
+              );
+            })}
           </div>
-
-          {/* Mobile: stack vertically */}
-          <style>{`
-            @media (max-width: 768px) {
-              [style*="paddingLeft: calc(50%"] { padding-left: 0 !important; }
-              [style*="paddingRight: calc(50%"] { padding-right: 0 !important; }
-            }
-          `}</style>
         </div>
       </section>
 
